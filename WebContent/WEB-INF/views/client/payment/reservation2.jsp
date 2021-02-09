@@ -18,7 +18,7 @@ $(function() {
 }); 
 
 function change(obj){
-   alert();
+   alert(obj);
    if(obj.getAttribute('class') == 'sits__place sits-price--middle'){ 
       obj.setAttribute('class', 'sits__place sits-price--cheap sits-state--not'); 
    }else{
@@ -174,17 +174,12 @@ function change(obj){
             <span class="arrow__text arrow--prev">prev step</span>
             <span class="arrow__info">영화예매</span>
          </a> 
-         <a href="/client/movie/reservation3" class="booking-pagination__next" onClick="alert('로그인이 필요한 서비스입니다.')">
+         <a href="/client/movie/reserRegist2" class="booking-pagination__next" onClick="alert('로그인이 필요한 서비스입니다.')">
             <span class="arrow__text arrow--next">next step</span> 
             <span class="arrow__info">결제하기</span>
          </a>
       </div>
 <%@include file="../inc/footer.jsp"%>
 <%@include file="../inc/script.jsp"%>
-<!-- <script type="text/javascript">
-   $(document).ready(function() {
-      init_BookingTwo();
-   });
-</script> -->
 </body>
 </html>

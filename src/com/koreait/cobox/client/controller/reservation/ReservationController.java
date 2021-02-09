@@ -96,7 +96,7 @@ public class ReservationController implements ServletContextAware {
          logger.debug("seat_name은? "+seat.getSeat_name());
          //logger.debug("seat_price는? "+seat.getSeat_price());
          
-         return "redirect:/client/movie/reservationfinal";
+         return "/client/payment/reservation3";
    }
    
    //예약하기(이건 paymentService에서??!)

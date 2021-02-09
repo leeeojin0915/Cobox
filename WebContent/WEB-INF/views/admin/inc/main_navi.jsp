@@ -32,6 +32,17 @@
       <a href="#">영화댓글관리</a> -->
     </div>
   </div> 
+  <div class="dropdown">
+    <button class="dropbtn">영화스케쥴관리
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="/admin/theater/list">상영영화목록</a>
+      <a href="/admin/theater/registform">상영영화 등록</a>
+      <!-- <a href="#">좌석관리</a>
+      <a href="#">영화댓글관리</a> -->
+    </div>
+  </div> 
 <div class="dropdown">
     <button class="dropbtn">게시판 
       <i class="fa fa-caret-down"></i>

@@ -7,7 +7,7 @@
 <%
 List<Movie> movieList = (List) request.getAttribute("movieList");
 List<Location> locationList = (List) request.getAttribute("locationList");
-//List<Theater> theaterList = (List) request.getAttribute("theaterList");
+List<Theater> theaterList=(List)request.getAttribute("theaterList");
 %>
 <!doctype html>
 <html>
@@ -51,11 +51,15 @@ h3{
    width:100%;
    height:500px;
    overflow:scroll;
-   
 }
-#pic{
-   width:300px;
-   height:150px;
+.resercard {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 30px;
+	background-color: #f1f1f1;
+	text-align: center;
+	width:100%;
+	height:300px;
+	margin-top:20px;
 }
 /*극장st */
 /* Style the tab */
@@ -119,8 +123,10 @@ input[type=button]:hover {
   background-color: #45a049;
 }
 .movie_poster{
-   width: 300px;
-   height: 500px;
+   display:block;
+   margin-left:auto;
+   margin-right:auto;
+   width:60%;
 }
 .selectMovie{
    font-style: oblique;
@@ -178,6 +184,18 @@ $(function() {
       });
    }
 });
+
+
+function date_click(){
+	var d=document.getElementById("sdate").value;
+	document.getElementById("selectdate").innerHTML=d;
+}
+function time_click(){
+	var t=document.getElementById("stime").value;
+	document.getElementById("selecttime").innerHTML=t;
+}
+
+
 </script>
 
 <%@include file="../inc/top.jsp"%>
@@ -191,10 +209,7 @@ $(function() {
            <div class="order-step third--step order-step--disable">3.결제하기</div>
       </div>
 
-         <h2 class="page-heading heading--outcontainer">영화</h2>
-
          <div class="row">
-         
             <div class="column">
                <h3>영화선택</h3>
                <div class="card">
@@ -202,8 +217,8 @@ $(function() {
                   <%for(int i=0;i<movieList.size();i++){%>
                   <%Movie movie=movieList.get(i); %>
                      <input name="movie.movie_id" type="hidden" value="<%=movie.getMovie_id()%>"/>
-                     <img onclick="myFunction(this)" name="movie_id" id="<%=movie.getMovie_id()%>" src="/resources/data/movie/<%=movie.getMovie_id()%>.<%=movie.getPoster() %>" alt="<%=movie.getMovie_name() %>" class="movie_poster" style='margin-right:10px'>
-                        <h4><a href="/client/movie/detail?movie_id=<%=movie.getMovie_id() %>" ><%=movie.getMovie_name() %></a></h4>
+                     <img onclick="myFunction(this)" name="movie_id" id="<%=movie.getMovie_id()%>" src="/resources/data/movie/<%=movie.getMovie_id()%>.<%=movie.getPoster() %>" alt="<%=movie.getMovie_name() %>" class="movie_poster">
+                     <a href="/client/movie/detail?movie_id=<%=movie.getMovie_id() %>" style="font-size:25px;margin-top:10px"><%=movie.getMovie_name() %></a>
                   <%} %>
                   </div>
                </div>
@@ -227,30 +242,46 @@ $(function() {
    
             <div class="column">
                <h3>시간선택</h3>
-               <div class="card">
-                    <label >날짜</label>
+               <div class="card" style="height:30%">
+               <div>
+                    <label>날짜</label>
                     <input type="date" id="sdate" name="sdate" onchange="date_click()">
-                    <div>
-                       <img id="expandedImg" style="width:200px">
-                     <div class="selectMovie" id="imgtext"></div>
-                     <div class="selectMovie" id="selectLocation"></div>
-                    </div>
-                     <label for="country">시간</label>
-                      <select name="stime" id="stime" onchange="time_click()">
-                        <option value="시간선택">시간선택</option>
-                        <option value="10:00">10:00</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:40">14:40</option>
-                        <option value="15:30">15:30</option>
-                        <option value="17:00">17:00</option>
-                        <option value="19:20">19:20</option>
-                        <option value="20:30">20:30</option>
-                        <option value="22:00">22:00</option>
-                      </select>
-                      <input type="button" value="다음" onclick="next()">
+               </div>
+               <div>
+                <label for="country">시간</label>
+                 <select name="stime" id="stime" onchange="time_click()" style="width:150px;height:25px;margin-top:3px">
+                   <option value="시간선택">시간선택</option>
+                   <option value="10:00">10:00</option>
+                   <option value="12:00">12:00</option>
+                   <option value="13:30">13:30</option>
+                   <option value="14:40">14:40</option>
+                   <option value="15:30">15:30</option>
+                   <option value="17:00">17:00</option>
+                   <option value="19:20">19:20</option>
+                   <option value="20:30">20:30</option>
+                   <option value="22:00">22:00</option>
+                 </select>
+               	</div>
+                    <!-- <input type="button" value="다음" onclick="next()" style="margin-top:20px"> -->
+                    <div class="booking-pagination booking-pagination" style="margin:10px">
+                    <a class="booking-pagination__next" onClick="next()">
+            			<span class="arrow__text arrow--next">next step</span> 
+            			<span class="arrow__info">좌석선택</span>
+        			</a>
+        			</div>
                </div>
             </div>
+            
+            <div class="column">
+               <div class="resercard">
+		           <img id="expandedImg" style="width:30%">
+		           <div class="selectMovie" id="imgtext"></div>
+		           <div class="selectMovie" id="selectLocation"></div>
+		           <div class="selectMovie" id="selectdate"></div>
+		           <div class="selectMovie" id="selecttime"></div>
+               </div>
+            </div>
+            
          </div>
       </form>
    </section>
