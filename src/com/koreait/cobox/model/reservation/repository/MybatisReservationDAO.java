@@ -41,7 +41,7 @@ public class MybatisReservationDAO implements ReservationDAO{
 	public void insert(Reservation reservation) throws ReservationRegistException{
 		int result=sqlSessionTemplate.insert("Reservation.insert",reservation);
 		if(result==0) {
-			throw new ReservationRegistException("¿¹¸Å¿¡ ½ÇÆÐ Çß½À´Ï´Ù.");
+			throw new ReservationRegistException("ï¿½ï¿½ï¿½Å¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 		}
 	}
 
@@ -49,7 +49,7 @@ public class MybatisReservationDAO implements ReservationDAO{
 	public void update(Reservation reservation) throws ReservationEditException{
 		int result=sqlSessionTemplate.update("Reservation.update",reservation);
 		if(result==0) {
-			throw new ReservationEditException("¿¹¾àº¯°æ½ÇÆÐ");
+			throw new ReservationEditException("ï¿½ï¿½ï¿½àº¯ï¿½ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 
@@ -57,7 +57,7 @@ public class MybatisReservationDAO implements ReservationDAO{
 	public void delete(Reservation reservation) throws ReservationDeleteException{
 		int result=sqlSessionTemplate.delete("Reservation.delete", reservation);
 		if(result==0) {
-			throw new ReservationDeleteException("¿¹¾àÃë¼Ò½ÇÆÐ");
+			throw new ReservationDeleteException("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½");
 		}
 		
 	}

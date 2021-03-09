@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Stime">
+	<insert id="insert" parameterType="Stime">
+		insert into stime(stime_id,schedule_id,timepicker) values(seq_stime.nextval,#{schedule_id},#{timepicker})
+	</insert>
+	
+	<select id="selectByScheduleId" parameterType="int" resultType="Stime">
+		select * from stime where schedule_id=#{schedule_id}
+	</select>
+	
+	<update id="update" parameterType="Stime">
+		update stime set timepicker=#{timepicker} where schedule_id=#{schedule_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from stime where schedule_id=#{schedule_id}
+	</delete>
+	
+</mapper>

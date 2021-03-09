@@ -17,8 +17,6 @@
 				    javaType="java.util.List"
 				    ofType="Genre"
 				    select="Genre.selectByMovie_id"/>
-				    
-				    
 	</resultMap>
 	
 	<resultMap id="joinRating" type="Movie">
@@ -61,6 +59,11 @@
 	
 	<!--영화 한건 가져오기  -->
 	<select id="selectById" parameterType="int" resultMap="joinRating">
+		select * from movie where movie_id=#{movie_id}
+	</select>
+	
+	<!--스케줄과 조인할 영화한건-->
+	<select id="selectBySchedule" parameterType="int" resultType="Movie">
 		select * from movie where movie_id=#{movie_id}
 	</select>
 

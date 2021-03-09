@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class Reservation {
 	private int reservation_id;
-	private Schedule schedule;
-	private ResSummary ResSummary;
-	private List<Seat> seat;
-	private int seatquantity;
+	private int res_summary_id;
+	private int schedule_id;
+	private int room_id;
+	private int roomquantity;
 }

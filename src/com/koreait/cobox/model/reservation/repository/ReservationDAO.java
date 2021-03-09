@@ -8,7 +8,7 @@ import com.koreait.cobox.model.domain.Schedule;
 
 public interface ReservationDAO {
 	public List selectAll();
-	public List selectById(int member_id);//¸¶ÀÌÆäÀÌÁö¿¡¼­ ¿¹¸Å Á¤º¸ »Ñ¸±¶§ »ç¿ëÇÒ°Í 
+	public List selectById(int member_id);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ 
 	public Reservation select(int reservation_id); //
 	public void insert(Schedule schedule);
 	public void insert(Reservation reservation);

@@ -1,4 +1,4 @@
-package com.koreait.cobox.model.reservation.repository;
+package com.koreait.cobox.model.theater.repository;
 
 import java.util.List;
 

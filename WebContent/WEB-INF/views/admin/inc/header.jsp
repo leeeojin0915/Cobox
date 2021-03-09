@@ -5,3 +5,4 @@
 <link rel="stylesheet" type="text/css" href="/resources/admin/table.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
+<link rel='stylesheet' type='text/css'href='/resources/admin/css/timepicki.css'/>

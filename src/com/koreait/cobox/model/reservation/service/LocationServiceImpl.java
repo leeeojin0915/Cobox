@@ -12,6 +12,7 @@ public class LocationServiceImpl implements LocationService{
 	@Autowired
 	private LocationDAO locationDAO;
 	
+
 	@Override
 	public List selectAll() {
 		return locationDAO.selectAll();

@@ -41,10 +41,10 @@ public class PaymentServiceImpl implements PaymentService{
 		
 		
 		//reservation에 schedule_id 넣어주기 
-		reservation.setSchedule(schedule);
+		//reservation.setSchedule(schedule);
 		//취득한 주문번호를 reservation에 넣어줘야한다   (주입어떻게해 ...객체안에 아이디... )
 		/* reservation.setRes_summary_id(resSummary.getRes_summay_id()); */
-		reservation.setResSummary(resSummary);
+		//reservation.setResSummary(resSummary);
 		
 		//예약정보 등록(Reservation)-우리는 장바구니테이블이 없으므로 detail(Reservation)도 넘겨받아서 insert해야함
 		reservationDAO.insert(reservation);

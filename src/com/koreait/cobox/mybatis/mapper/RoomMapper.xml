@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Room">
+	<select id="selectAll" resultType="Room">
+		select * from room order by room_id desc
+	</select>
+	
+	<select id="select">
+		select * from room where room_id=#{room_id}
+	</select>
+</mapper>

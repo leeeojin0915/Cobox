@@ -12,4 +12,9 @@
 	<select id="selectAll" resultMap="joinTheater">
 		select * from location order by location_id asc
 	</select>
+	
+	<select id="selectByTheater" parameterType="int" resultType="Location">
+		select * from location where location_id=#{location_id}
+	</select>	
+	
 </mapper>

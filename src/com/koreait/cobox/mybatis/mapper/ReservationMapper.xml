@@ -3,8 +3,8 @@
 <mapper namespace="Reservation">
 	<!--예약정보-->
 	<insert id="insert" parameterType="Reservation">
-		insert into reservation(reservation_id,res_summary_id,schedule_id,seat_id,seatquantity) 
-		values(seq_reservation.nextval,#{res_summary_id},#{schedule_id},#{seat_id},#{seatquantity})
+		insert into reservation(reservation_id,res_summary_id,schedule_id,room_id,roomquantity) 
+		values(seq_reservation.nextval,#{res_summary_id},#{schedule_id},#{room_id},#{roomquantity})
 	</insert>
 	
 	<select id="selectById" parameterType="Reservation" resultType="int">

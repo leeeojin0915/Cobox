@@ -1,11 +1,11 @@
-package com.koreait.cobox.model.reservation.service;
+package com.koreait.cobox.model.theater.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.koreait.cobox.model.reservation.repository.TheaterDAO;
+import com.koreait.cobox.model.theater.repository.TheaterDAO;
 
 @Service
 public class TheaterServiceImpl implements TheaterService{

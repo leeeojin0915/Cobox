@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sdate">
+
+	<insert id="insert" parameterType="Sdate">
+		insert into sdate(sdate_id,schedule_id,datepicker) values(seq_sdate.nextval,#{schedule_id},#{datepicker})
+	</insert>
+	
+	<select id="selectByScheduleId" parameterType="int" resultType="Sdate">
+		select * from sdate where schedule_id=#{schedule_id}
+	</select>
+	
+	<update id="update" parameterType="Sdate">
+		update sdate set datepicker=#{datepicker} where schedule_id=#{schedule_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from sdate where schedule_id=#{schedule_id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Box">
+
+	<!--극장과 조인-->
+	<resultMap  id="joinTheater" type="Box">
+ 		<id column="box_id" property="box_id"/>	
+ 		<result column="box_name" property="box_name"/>
+ 		<association column="theater_id" property="theater" javaType="Theater" select="Theater.selectByTheaterId"/>
+	</resultMap>
+	<select id="selectAll" resultMap="joinTheater" >
+		select * from box where theater_id=#{theater_id}
+	</select>
+	
+	
+	<!--스케줄과 조인할 box-->
+	<resultMap  id="joinTheaterById" type="Box">
+		<id column="box_id" property="box_id"/>	
+		<result column="box_name" property="box_name"/>
+		<association column="theater_id" property="theater" javaType="Theater" select="Theater.selectByTheaterId"/>
+	</resultMap>
+	<select id="selectBySchedule" parameterType="int" resultMap="joinTheaterById">
+		select * from box where box_id=#{box_id}
+	</select>
+	
+	<select id="selectAllById" parameterType="int" resultType="Box">
+		select * from box where theater_id=#{theater_id}
+	</select>
+
+</mapper>

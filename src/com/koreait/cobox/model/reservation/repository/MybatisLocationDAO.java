@@ -11,6 +11,7 @@ public class MybatisLocationDAO implements LocationDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
+
 	@Override
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Location.selectAll");

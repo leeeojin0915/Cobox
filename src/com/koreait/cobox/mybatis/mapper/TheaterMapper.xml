@@ -6,11 +6,26 @@
       select * from theater where location_id=#{location_id}
    </select>
    
-   <select id="selectByTheaterId" parameterType="int" resultType="Theater">
+      <resultMap  id="joinLocation" type="Theater">
+   		<id column="theater_id" property="theater_id"/>
+   		<result column="theater_name" property="theater_name"/>
+   		<association column="location_id" property="location" javaType="Location" select="Location.selectByTheater"/>
+   </resultMap>
+   
+   <select id="selectByTheaterId" parameterType="int" resultMap="joinLocation" >
       select * from theater where theater_id=#{theater_id}
    </select>
    
-   <select id="selectAll" resultType="Theater">
-      select * from theater order by theater_id desc
+   
+   
+   <resultMap  id="joinBox" type="Theater">
+   		<id column="theater_id" property="theater_id"/>
+   		<result column="location_id" property="location_id"/>
+   		<result column="theater_name" property="theater_name"/>
+   		<collection column="theater_id" property="box" javaType="java.util.List" ofType="Box" select="Box.selectAllById"/>
+   </resultMap>
+   
+   <select id="selectAll" resultMap="joinBox">
+      select * from theater order by theater_id asc
    </select>
 </mapper>  

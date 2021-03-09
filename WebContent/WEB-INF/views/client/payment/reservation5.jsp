@@ -1,3 +1,4 @@
+<%@page import="com.koreait.cobox.model.domain.Stime"%>
 <%@page import="com.koreait.cobox.model.domain.Schedule"%>
 <%@page import="com.koreait.cobox.model.domain.Theater"%>
 <%@page import="com.koreait.cobox.model.domain.Location"%>
@@ -8,6 +9,7 @@
 List<Movie> movieList = (List) request.getAttribute("movieList");
 List<Location> locationList = (List) request.getAttribute("locationList");
 List<Theater> theaterList=(List)request.getAttribute("theaterList");
+List<Schedule> scheduleList=(List)request.getAttribute("scheduleList");
 %>
 <!doctype html>
 <html>
@@ -17,64 +19,46 @@ List<Theater> theaterList=(List)request.getAttribute("theaterList");
 </head>
 <style>
 * {
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
-body {
-   font-family: Arial, Helvetica, sans-serif;
-}
-h3{
-   margin-bottom:30px;
-}
-/*사진 */
-/* Float four columns side by side */
+
+/* Create four equal columns that floats next to each other */
 .column {
-   float: left;
-   width: 30%;
-   padding: 0 15px;
-   
+  float: left;
+  width: 25%;
+  padding: 10px;
+  height: 400px; /* Should be removed. Only for demonstration */
+  overflow:scroll;
+  text-align: center;
 }
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-   .column {
-      width: 100%;
-      display: block;
-      margin-bottom: 20px;
-      
-   }
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
-/* Style the counter cards */
-.card {
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+img{
    padding: 14px;
-   text-align: center;
-   background-color: #f1f1f1;
    width:100%;
-   height:500px;
-   overflow:scroll;
+   height:200px;
 }
-.resercard {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	padding: 30px;
-	background-color: #f1f1f1;
-	text-align: center;
-	width:100%;
-	height:300px;
-	margin-top:20px;
-}
-/*극장st */
+
 /* Style the tab */
 .tab {
   float: left;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  width: 30%;
+  width: 20%;
+  height: 400px;
 }
+
 /* Style the buttons inside the tab */
-.tab button {
+.tab input[type=button] {
   display: block;
   background-color: inherit;
   color: black;
-  padding: 9.5px 12px;
+  padding: 22px 16px;
   width: 100%;
   border: none;
   outline: none;
@@ -83,79 +67,56 @@ h3{
   transition: 0.3s;
   font-size: 17px;
 }
+
 /* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: skyblue;
+.tab input[type=button]:hover {
+  background-color: #ddd;
 }
+
 /* Create an active/current "tab button" class */
-.tab button.active {
-  background-color: #fff;
+.tab input[type=button].active {
+  background-color: #ccc;
 }
+
 /* Style the tab content */
 .tabcontent {
   float: left;
   padding: 0px 12px;
   border: 1px solid #ccc;
-  width: 70%;
+  width: 100%;
   border-left: none;
-  height:100%;
-}
-#birthday{
-   width:230px;
-   height:30px;
-}
-/*시간버튼  */ 
-#time{
-   width:230px;
-   height:30px;
-   margin-top:20px;
-}
-input[type=button] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top:100%;
-}
-input[type=button]:hover {
-  background-color: #45a049;
-}
-.movie_poster{
-   display:block;
-   margin-left:auto;
-   margin-right:auto;
-   width:60%;
-}
-.selectMovie{
-   font-style: oblique;
-   font-size: 20px;
-   font-weight: bold;
+  height: 100px;
+  overflow:scroll;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+$(function () {
+	$(".movie_poster").click(function () {
+		getTheaterList(this);
+	});
+		
+});
 //비동기 극장가져오기
-function getTheaterList(obj) {
-   //alert();
+/* function getTheaterList(obj) {
+   alert("dd",$(obj).val());
    $.ajax({
       url:"/client/movie/theater",
       type:"get",
-       data:{
-         location_id:$(obj).val()
-      }, 
+      data:{
+    	  movie_id:$(obj).val()
+      },  
       success:function(result){
          //alert("서버로 부터 받은 결과는 "+result);
-         $("#tselect").empty();
+         $(".tabcontent").empty();
             
          for(var i=0;i<result.length;i++){
-            var theater=result[i];
-            $("#tselect").append("<input name=\"theater.theater_id\" type=\"hidden\" value=\""+theater.theater_id+"\"><button id=\"btn"+i+"\" type=\"button\" style =\"font-size:1em;\">"+theater.theater_name+"</button></input>");
+            var schedule=result[i];
+            $(".tabcontent").append("<input type=\"button\" value="+schedule.box.theater.theater_name+">");
          } 
       } 
-   });   
-}
+   });
+} */
 
 function next(){
    if (confirm("좌석선택 단계로 넘어가시겠습니까??")) {
@@ -194,10 +155,7 @@ function time_click(){
 	var t=document.getElementById("stime").value;
 	document.getElementById("selecttime").innerHTML=t;
 }
-
-
 </script>
-
 <%@include file="../inc/top.jsp"%>
 <body>
    <section class="container">
@@ -208,83 +166,65 @@ function time_click(){
          <div class="order-step second--step order-step--disable">2.좌석선택</div>
            <div class="order-step third--step order-step--disable">3.결제하기</div>
       </div>
-
-         <div class="row">
-            <div class="column">
-               <h3>영화선택</h3>
-               <div class="card">
-                  <div class="thumbnail clearfix">
-                  <%for(int i=0;i<movieList.size();i++){%>
-                  <%Movie movie=movieList.get(i); %>
-                     <input name="movie.movie_id" type="hidden" value="<%=movie.getMovie_id()%>"/>
-                     <img onclick="myFunction(this)" name="movie_id" id="<%=movie.getMovie_id()%>" src="/resources/data/movie/<%=movie.getMovie_id()%>.<%=movie.getPoster() %>" alt="<%=movie.getMovie_name() %>" class="movie_poster">
-                     <a href="/client/movie/detail?movie_id=<%=movie.getMovie_id() %>" style="font-size:25px;margin-top:10px"><%=movie.getMovie_name() %></a>
-                  <%} %>
-                  </div>
-               </div>
-            </div>
-            <div class="column">
-               <div>
-               <h3>극장선택</h3>
-               </div>
-               <div class="card">
-                  <div class="tab">
-                     <%for(int i=0;i<locationList.size();i++){ %>
-                     <%Location location=locationList.get(i); %>
-                          <button onclick="getTheaterList(this)" type="button" name="location_id" id="location_id<%=i %>"  value="<%=location.getLocation_id()%>"><span><%=location.getLoc_name() %></span></button>
-                     <%} %>     
-                  </div>
-                  <!--극장선택-->
-                  <div class="tabcontent tab" id="tselect">
-                  </div>
-               </div>
-            </div>
-   
-            <div class="column">
-               <h3>시간선택</h3>
-               <div class="card" style="height:30%">
-               <div>
-                    <label>날짜</label>
-                    <input type="date" id="sdate" name="sdate" onchange="date_click()">
-               </div>
-               <div>
-                <label for="country">시간</label>
-                 <select name="stime" id="stime" onchange="time_click()" style="width:150px;height:25px;margin-top:3px">
-                   <option value="시간선택">시간선택</option>
-                   <option value="10:00">10:00</option>
-                   <option value="12:00">12:00</option>
-                   <option value="13:30">13:30</option>
-                   <option value="14:40">14:40</option>
-                   <option value="15:30">15:30</option>
-                   <option value="17:00">17:00</option>
-                   <option value="19:20">19:20</option>
-                   <option value="20:30">20:30</option>
-                   <option value="22:00">22:00</option>
-                 </select>
-               	</div>
-                    <!-- <input type="button" value="다음" onclick="next()" style="margin-top:20px"> -->
-                    <div class="booking-pagination booking-pagination" style="margin:10px">
-                    <a class="booking-pagination__next" onClick="next()">
-            			<span class="arrow__text arrow--next">next step</span> 
-            			<span class="arrow__info">좌석선택</span>
-        			</a>
-        			</div>
-               </div>
-            </div>
-            
-            <div class="column">
-               <div class="resercard">
-		           <img id="expandedImg" style="width:30%">
-		           <div class="selectMovie" id="imgtext"></div>
-		           <div class="selectMovie" id="selectLocation"></div>
-		           <div class="selectMovie" id="selectdate"></div>
-		           <div class="selectMovie" id="selecttime"></div>
-               </div>
-            </div>
-            
-         </div>
+      
+		<div class="row">
+		  <div class="column" style="background-color:#aaa;">
+      	<%for(int i=0;i<scheduleList.size();i++){ %>
+      	<%Schedule schedule=scheduleList.get(i); %>
+		    <img onclick="myFunction(this)" name="movie_id" id="<%=schedule.getMovie().getMovie_id()%>" src="/resources/data/movie/<%=schedule.getMovie().getMovie_id()%>.<%=schedule.getMovie().getPoster() %>" alt="<%=schedule.getMovie().getMovie_name() %>" class="movie_poster">
+             <a href="/client/movie/detail?movie_id=<%=schedule.getMovie().getMovie_id()%>" style="font-size:25px;margin-top:10px"><%=schedule.getMovie().getMovie_name() %></a>
+		<%} %>
+		  </div>
+		  
+			<div class="tab">
+			<%for(int i=0;i<scheduleList.size();i++){ %>
+			<%Schedule schedule=scheduleList.get(i); %>
+			<%if(i==0){%>
+			  <input type="button" class="tablinks" onclick="openCity(event, '<%=schedule.getBox().getTheater().getLocation().getLoc_name()%>')" id="defaultOpen" value="<%=schedule.getBox().getTheater().getLocation().getLoc_name()%>"/>
+		  	<%} else{%>
+		  	  <input type="button" class="tablinks" onclick="openCity(event, '<%=schedule.getBox().getTheater().getLocation().getLoc_name()%>')" value="<%=schedule.getBox().getTheater().getLocation().getLoc_name()%>"/>
+		  	<%} %>
+			<div id="<%=schedule.getBox().getTheater().getLocation().getLoc_name()%>" class="tabcontent">
+			<input type="button" value="<%=schedule.getBox().getTheater().getTheater_name()%>">
+			</div>
+			  <%} %>
+			</div>
+			
+		  <div class="column" style="background-color:#ccc;">
+		    <select>
+			<%for(int i=0;i<scheduleList.size();i++){ %>
+			<%Schedule schedule=scheduleList.get(i); %>
+		    	<option value="<%=schedule.getSdate().getSdate_id()%>"><%=schedule.getSdate().getDatepicker() %></option>
+		    <%} %>
+		    </select>
+		  </div>
+		  
+		  <div class="column" style="background-color:#ddd;">
+ 		    <img id="expandedImg">
+		    <span id="imgtext"></span>
+		    <p>Some text..</p>
+		  </div>
+		</div>
       </form>
    </section>
    <%@include file="../inc/footer.jsp"%>
+	<script>
+	function openCity(evt, cityName) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+	    tabcontent[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+	  document.getElementById(cityName).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
+	
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+	</script>
 </body>
 </html>

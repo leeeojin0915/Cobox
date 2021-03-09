@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class Box {
 	private int box_id;
-	private Theater theater;
-	private int total_seat;
+	private int theater_id;
+	private String box_name;
+	
+	private Theater theater; 
 }

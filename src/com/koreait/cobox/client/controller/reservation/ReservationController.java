@@ -27,10 +27,13 @@ import com.koreait.cobox.model.movie.service.MovieService;
 import com.koreait.cobox.model.payment.service.PaymentService;
 import com.koreait.cobox.model.reservation.service.LocationService;
 import com.koreait.cobox.model.reservation.service.ReservationService;
-import com.koreait.cobox.model.reservation.service.ScheduleService;
-import com.koreait.cobox.model.reservation.service.TheaterService;
+import com.koreait.cobox.model.schedule.service.ScheduleService;
+import com.koreait.cobox.model.theater.service.TheaterService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class ReservationController implements ServletContextAware {
    private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
    @Autowired
@@ -56,10 +59,12 @@ public class ReservationController implements ServletContextAware {
       List movieList = movieService.selectAll();
       List locationList = locationService.selectAll();
       //List theaterList = theaterService.selectAll();
+      List scheduleList=scheduleService.selectAll();
       
       ModelAndView mav = new ModelAndView();
       mav.addObject("movieList", movieList);
       mav.addObject("locationList", locationList);
+      mav.addObject("scheduleList", scheduleList);
       //mav.addObject("theaterList", theaterList);
       mav.setViewName("client/payment/reservation5");
       return mav;
@@ -68,22 +73,23 @@ public class ReservationController implements ServletContextAware {
    //비동기방식 극장 가져오기
    @RequestMapping(value = "/movie/theater", method = RequestMethod.GET)
    @ResponseBody
-   public List getTheaterList(int location_id) {
-      logger.debug("location_id:" + location_id);
-      List<Theater> theaterList = theaterService.selectAllById(location_id);
-      return theaterList;
+   public Schedule getTheaterList(int schedule_id) {
+	   //log.debug(null);
+      //List<Theater> theaterList = theaterService.selectAllById(location_id);
+      Schedule schedule=scheduleService.select(schedule_id);
+      return schedule;
    }
 
    //가져온 영화,극정,시간 선택 후 넘기기 
    @RequestMapping(value = "/movie/reserRegist", method = RequestMethod.POST )
    public String reserMovie(HttpServletRequest request, Schedule schedule) {
 
-      logger.debug("movie_id는? "+schedule.getMovie().getMovie_id());
-      logger.debug("theater_id는? "+schedule.getTheater().getTheater_id());
-      logger.debug("sdate는? "+schedule.getSdate());
-      logger.debug("stime는? "+schedule.getStime());
+//      logger.debug("movie_id는? "+schedule.getMovie().getMovie_id());
+//      logger.debug("theater_id는? "+schedule.getTheater().getTheater_id());
+//      logger.debug("sdate는? "+schedule.getSdate());
+//      logger.debug("stime는? "+schedule.getStime());
 
-      scheduleService.insert(schedule);
+      //scheduleService.insert(schedule);
       
       return "/client/payment/reservation2";
    }
@@ -102,13 +108,13 @@ public class ReservationController implements ServletContextAware {
    //예약하기(이건 paymentService에서??!)
    @RequestMapping(value = "/movie/reservationfinal", method = RequestMethod.POST)
    public MessageData setReser(Schedule schedule, Reservation reservation, ResSummary resSummary) {
-      scheduleService.insert(schedule);
+      //scheduleService.insert(schedule);
       
-      reservation.setSchedule(schedule);
+      //reservation.setSchedule(schedule);
       reservationService.insert(reservation);
       
-      logger.debug("schedule "+reservation.getSchedule().getSchedule_id());
-      logger.debug("resSummary "+reservation.getResSummary().getRes_summay_id());
+      //logger.debug("schedule "+reservation.getSchedule().getSchedule_id());
+     // logger.debug("resSummary "+reservation.getResSummary().getRes_summay_id());
       
       MessageData messageData=new MessageData();
       messageData.setResultCode(1);
